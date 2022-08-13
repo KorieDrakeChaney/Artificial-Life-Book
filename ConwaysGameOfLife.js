@@ -49,7 +49,7 @@ let blackColor = new Color(0, 0, 0, 0);
 let whiteColor = new Color(255, 255, 255, 1);
 let staticColor =  new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255))
 let aliveColor = new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255), 0.875)
-let highlightColor = new Color(255, 247, 0, 1);
+let highlightColor = new Color(0, 247, 255, 1);
 class Cell {
     constructor(data ={
         position : [0, 0], 
@@ -149,6 +149,7 @@ class Grid {
 
         this.borderCells = [];
         this.currentBorderCell = 0;
+        this.useBorderColor = true
         this.cells = [];
         this.fpsInterval = 1000 / data.fps;
         this.startTime;
@@ -343,6 +344,9 @@ class Grid {
                 this.clear()
                 for(const id of this.initCells) this.cells[id].state = 1
             }
+            if(this.generation % this.borderCells.length == 0){
+                this.toggleBorderColor()
+            }
         }
     }
 
@@ -361,11 +365,13 @@ class Grid {
         
         if(this.useColor){
             if (cell.state == 0) {
-                cell.color = Color.lerpColors(cell.color, blackColor, this.useAlpha ? 0.25 : 1.0)
+                let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+                cell.color = Color.lerpColors(cell.color, blackColor, alpha)
                 cell.body.style.backgroundColor = cell.color.toString()
             }
             else if(cell.prevState == 0 && cell.state == 1){
-                cell.color = Color.lerpColors(cell.color, aliveColor, this.useAlpha ? 0.5 : 1.0)
+                let alpha = this.useAlpha ? 0.5 * 0.5 * (3 - 2 * 0.5) : 1.0;
+                cell.color = Color.lerpColors(cell.color, aliveColor, alpha)
                 cell.body.style.backgroundColor = cell.color.toString()
             }
             else if(cell.prevState == 1 && cell.state == 1){
@@ -375,12 +381,15 @@ class Grid {
         }
         else { 
           if(cell.state == 1){
-              cell.color = Color.lerpColors(cell.color, whiteColor, this.useAlpha ? 0.1 : 1.0)
-              cell.body.style.backgroundColor = cell.color.toString()
+                let alpha = this.useAlpha ? 0.1 * 0.1 * (3 - 2 * 0.1) : 1.0;
+                cell.color = Color.lerpColors(cell.color, whiteColor, alpha)
+                cell.body.style.backgroundColor = cell.color.toString()
 
           }else { 
-              cell.color = Color.lerpColors(cell.color, blackColor, this.useAlpha ? 0.25 : 1.0)
-              cell.body.style.backgroundColor = cell.color.toString()
+                let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+
+                cell.color = Color.lerpColors(cell.color, blackColor, alpha)
+                cell.body.style.backgroundColor = cell.color.toString()
           }
 
           
@@ -391,7 +400,9 @@ class Grid {
     if(this.useBorders){
         let cell = this.cells[this.borderCells[this.currentBorderCell]]
         if(cell){
-            cell.borderColor = Color.lerpColors(cell.borderColor, highlightColor, 0.25);
+            let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+            cell.borderColor = Color.lerpColors(cell.borderColor, this.useBorderColor ? this.borderColor : highlightColor, alpha);
+            console.log(cell.borderColor)
             cell.body.style.borderColor = cell.borderColor.toString()
             if(this.currentBorderCell + 1 == this.borderCells.length) this.currentBorderCell = 0;
             else this.currentBorderCell++;
@@ -407,6 +418,11 @@ class Grid {
         this.useColor = !this.useColor;
         for(const cell of this.cells)cell.useColor = this.useColor;
     }
+
+    toggleBorderColor(){
+        this.useBorderColor = !this.useBorderColor;
+    }
+
 
     clear(){ 
         for(const cell of this.cells) cell.state = 0;
