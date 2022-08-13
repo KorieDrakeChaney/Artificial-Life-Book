@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Section 1 - Getting Started</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html"><strong aria-hidden="true">2.1.</strong> Section 1 - Getting Started</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <br>
+<h1 style = "text-align: center;"> Introduction </h1>
+<hr />
+<div style = "background-color : rgba(0, 0, 0, 0.05); text-align: center; border-left : solid black 2px; border-right : solid black 2px;">
+<span style="font-size : 30px;"><b>About This Book</b></span>
+</div>
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05);  border-left : solid black 2px; border-right : solid black 2px;">
+<p><i style="color:grey;">This book is free and open source, and all code uses the MIT license - so you are free to do whatever you want with this <a style="color:rgba(0, 125, 125, 1);" href="https://github.com/KorieDrakeChaney/Game-Of-Life-Book" target="_blank">code</a> :D</i></p>
+</div>
+<hr />
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px;">
+<h2 style="color:rgba(255, 125, 125, 0.75)">Prerequisites</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics" target="_blank">Basic Javascript</a></li>
+</ul>
+<p>This book is primarily about learning the logic of creating AL/CA programs, so that it will be universal to any language you use, but I will be using Javascript as my language of choice. Don't be scared or intimidated if you do not know it, I will sprinkle in the methods I will be using.</p>
+</div>
+<hr />
+<div style = "background-color : rgba(0, 0, 0, 0.05); text-align: center; border-left : solid black 2px; border-right : solid black 2px;">
+<span style="font-size : 30px;"><b><a style="color:white;" target ="_blank" href="https://webpack.js.org/">Structure</a></b></span>
+<br>
+<span style="color:grey">Tutorial layout</span>
+</div>
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px;">
+    Taken from <a target="_blank" href="https://learnopengl.com/Introduction">learnopengl.com</a>, I'll also structure this the same way, with boxes, code blocks, color hints, and <i>function references</i>
+<h2 style="color:rgba(255, 125, 125, 0.75)">Boxes</h2>
+<div style="background-color : rgba(191, 245, 205, 0.75); padding:2% 1%"> <b style="color : rgba(7, 41, 16, 1)">Green</b> <span style="color : rgba(23, 87, 40, 1)">boxes give helpful hints.</span></div>
+<br>
+<div style="background-color : rgba(240, 156, 156, 0.75); padding:2% 1%"> <b style="color : rgba(79, 11, 11, 1)">Red</b> <span style="color : rgba(110, 25, 25, 1)">boxes will contain warnings or other features you have to be extra careful with.</span></div>
+<h2 style="color:rgba(255, 125, 125, 0.75)">Code</h2>
+You will see fragments of code scattered around the book in dark-gray boxes like this 
+<pre><code class="language-javascript">console.log(&quot;Hello World!&quot;)
+</code></pre>
+<h2 style="color:rgba(255, 125, 125, 0.75)">Color hints</h2>
+Some words are displayed with a different color to make it extra clear these words portray a special meaning:
+<ul>
+  <li><b style="color : rgba(71, 255, 90, 1)">Definition:</b> green words specify a definition i.e. an important aspect/name of something you're likely to hear more often.</li>
+  <li><b style="color : rgba(232, 50, 37, 1)">Program structure:</b> red words specify function names or class names.</li>
+  <li><b style="color : rgba(65, 71, 250, 1)">Variables:</b> blue words specify variables</li>
+</ul>
+<h2 style="color:rgba(255, 125, 125, 0.75)">Javascript Function References</h2>
+Functions will show up in a slightly noticeable underline with bolded and color, to link you to the documentation. Clicking on <b>window.<a style="color:rgba(100, 155, 155, 1); text-decoration:underline;"href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener" target="_blank">addEventListener</a>(...);</b>
+<p>Now that you have got the feel of everything let's go learn about <a href="./ElementaryCellularAutomata0.html">Elementary Cellular Automata</a>!</p>
+</div>
+<hr />
+<p>Copyright (C) 2022, Korie Chaney.</p>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><br>
+<h1 style = "text-align: center;"> Elementary Cellular Automata </h1>
+<hr />
+<div style = "background-color : rgba(0, 0, 0, 0.05); text-align: center; border-left : solid black 2px; border-right : solid black 2px;">
+<span style="font-size : 30px;"><b>Cellular Automata</b></span>
+</div>
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05);  border-left : solid black 2px; border-right : solid black 2px;">
+<p>A Cellular Automaton is a </p>
+</div>
+<hr />
+<p>Copyright (C) 2022, Korie Chaney.</p>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><br>
+<h1 style = "text-align: center;"> Getting Started </h1>
+<hr />
+<hr />
+<p>Copyright (C) 2022, Korie Chaney.</p>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><br>
+<h1 style = "text-align: center;"> Getting Started </h1>
+<hr />
+<div style = "background-color : rgba(0, 0, 0, 0.05); text-align: center; border-left : solid black 2px; border-right : solid black 2px;" id="title">
+<span style="font-size : 30px;"><b>Conway's Game of Life</b></span>
+</div>
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05);  border-left : solid black 2px; border-right : solid black 2px;">
+<p>Conway's Game of Life is a very simple but rewarding project, understanding it and doing it on your own is such a great feeling. I will be walking you through it with the basic logic while creating programming building blocks along the way.</p>
+<p>We're evolving from a one-dimensional CA to now a two-dimensional CA adding complexity as we will have a larger neighborhood of <b>9</b>, contrast to the simple neighborhood of <b>3</b>  in Elementary Cellular Automata.</p>
+<div id="neighborhood" style="display: grid;">
+<video controls>
+<source src="Neighborhood.mp4" type="video/mp4">
+</video>
+</div>
+<p>This carries the same concept of a world of cells, which carry 2 states, 0 or 1, <b style="color:green;">alive</b> or <b style="color:red;">dead</b>.</p>
+<p>As for the rules, they're 3 basic rules</p>
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px; border-bottom : solid black 2px; border-top : solid black 2px;">
+<ul>
+<li>
+<p>(1) <i>Survival</i>: If a cell is in state 1 (<b style="color:green;">alive</b>)
+and has 2 or 3 neighbors in state 1,
+then the cell <b style="color:green;">survives</b>, i.e., remains
+in state 1.</p>
+</li>
+<li>
+<p>(2) <i>Birth</i>: If a cell is in state 0 and has
+exactly 3 neighbors in state 1, then
+in the next time step the cell goes to
+state 1.</p>
+</li>
+<li>
+<p>(3) <i>Death</i>: A cell in state 1 <b style="color:red;">dies</b> (goes to
+state 0) of loneliness if it has 0 or 1
+neighbors. Also, it <b style="color:red;">dies</b> because of
+overcrowding if it has 4 or more
+neighbors.</p>
+</li>
+</ul>
+</div>
+<video style="background: solid 1px white" controls>
+<source src="RuleExplanation.mp4" type="video/mp4">
+</video>
+</div>
+<hr />
+<script src="ConwaysGameOfLife.js">
+
+</script>
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05);  border-left : solid black 2px; border-right : solid black 2px;">
+<p>With these simple rules, many variations can occur: </p>
+<p><b>Static</b></p>
+<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px; border-bottom : solid black 2px; border-top : solid black 2px;">
+<script>
+    let grid = new Grid({width : Math.floor(window.innerWidth / 20), height : Math.floor(window.innerHeight / 20)})
+
+    grid.startAnimating();
+
+</script>
+<hr />
+<p>Copyright (C) 2022, Korie Chaney.</p>
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><br>
+<h1 style = "text-align: center;"> Getting Started </h1>
+<hr />
+<hr />
+<p>Copyright (C) 2022, Korie Chaney.</p>
+<hr />
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            MathJax.Hub.Register.StartupHook('End', function() {
+                window.setTimeout(window.print, 100);
+            });
+        });
+        </script>
+
+    </body>
+</html>
