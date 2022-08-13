@@ -1,7 +1,4 @@
 
-let title = document.getElementById("title");
-let position = title.getBoundingClientRect()
-
 
 const lerp = (a, b, t) =>{
     return a + (b - a) * t
@@ -12,7 +9,7 @@ const Rand = (min = 0, max = 1) => {
 }
 
 class Color { 
-    constructor(r, g, b, a = 1){
+    constructor(r = 1, g = 1, b = 1, a = 1){
         this.r = r;
         this.g = g;
         this.b = b;
@@ -30,13 +27,29 @@ class Color {
         let a = lerp(colorA.a, colorB.a, alpha)
         return new Color(r, g, b, a);
     }
+
+    static isColorsEqual(colorA, colorB){
+        if(colorA.r != colorB.r) return false;
+        if(colorA.g != colorB.g) return false;
+        if(colorA.b != colorB.b) return false;
+        if(colorA.a != colorB.a) return false;
+        return true
+    }
+
+    isEqual(colorB){
+        if(this.r  <= colorB.r * 0.9) return false;
+        if(this.g  <= colorB.g * 0.9) return false;
+        if(this.b  <= colorB.b * 0.9) return false;
+        if(this.a  <= colorB.a * 0.9) return false;
+        return true
+    }
 }
 
 let blackColor = new Color(0, 0, 0, 0);
 let whiteColor = new Color(255, 255, 255, 1);
 let staticColor =  new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255))
 let aliveColor = new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255), 0.875)
-
+let highlightColor = new Color(255, 247, 0, 1);
 class Cell {
     constructor(data ={
         position : [0, 0], 
@@ -49,6 +62,8 @@ class Cell {
         this.state = 0;
         this.prevState = 0;
         this.id = 0;
+        this.pos = data.position;
+        this.borderColor = new Color()
 
         if(data.position == undefined) data.position = [0, 0];
         if(data.size == undefined) data.size = 20;
@@ -60,11 +75,16 @@ class Cell {
         this.body =  document.createElement('div');
         this.body.style.left = `${(data.position[0] * this.size)}px`;
         this.body.style.top = `${(data.position[1] * this.size)}px`;
-        this.color = this.state == 0 ? blackColor : whiteColor
+        if(this.useColor){
+            this.color = this.state == 0 ? blackColor : aliveColor
+        }
+        else { 
+            this.color = this.state == 0 ? blackColor : whiteColor
+        }
         this.body.style.zIndex = "10000000000000000000000"
         if(data.relative){
-            this.body.style.gridColumn = data.position[0];
-            this.body.style.gridRow = data.position[1];
+            this.body.style.gridColumn = data.position[0] + 1;
+            this.body.style.gridRow = data.position[1] + 1;
         }
         else { 
             this.body.style.position = 'absolute'
@@ -90,43 +110,45 @@ class Cell {
     }
 }
 
-//repeat(3, 1fr)
-
 class Grid { 
     constructor(data = {
         width : 20, 
         height : 20,
         fps : 10, 
-        useAlpha : true,
+        useAlpha : false,
         useColor : false,
         infinite : false, 
         cellSize : 20, 
         generationLimit : 30, 
         interactiveCells : true,
-        repeat : false, 
         repeatAfter : 0,
         initCells : [], 
         offset : [0, 0],
-        relative : false, 
-        relativeObject : ""
+        relativeObject : "", 
+        label : "", 
+        useBorders : false, 
+        borderColor : new Color(255, 255, 255, 0.5),
          
     }){
         if(data.width == undefined) data.width = 20;
         if(data.height == undefined) data.height = 20;
+        if(data.useBorders == undefined) data.useBorders = false;
+        if(data.borderColor == undefined) data.borderColor = new Color(255, 255, 255, 0.5);
         if(data.fps == undefined) data.fps = 10;
         if(data.useColor == undefined) data.useColor = false;
-        if(data.useAlpha == undefined) data.useAlpha = true;
+        if(data.useAlpha == undefined) data.useAlpha = false;
         if(data.cellSize == undefined) data.cellSize = 20;
         if(data.infinite == undefined) data.infinite = false;
         if(data.generationLimit == undefined) data.generationLimit = 30;
         if(data.interactiveCells == undefined) data.interactiveCells = true;
-        if(data.repeat == undefined) data.repeat = false;
         if(data.repeatAfter == undefined) data.repeatAfter = 0;
         if(data.initCells == undefined) data.initCells = [];
         if(data.offset == undefined) data.offset = [0, 0];
-        if(data.relative == undefined) data.relative = false;
         if(data.relativeObject == undefined) data.relativeObject =  "";
+        if(data.label == undefined) data.label =  "";
 
+        this.borderCells = [];
+        this.currentBorderCell = 0;
         this.cells = [];
         this.fpsInterval = 1000 / data.fps;
         this.startTime;
@@ -135,41 +157,89 @@ class Grid {
         this.elapsed;
         this.generation = 0;
         this.cellSize = data.cellSize;
-        this.relative = data.relative;
         this.offset = data.offset;
-        this.repeat = data.repeat;
         this.width = data.width;
         this.height = data.height;
         this.generationLimit = data.generationLimit;
         this.repeatAfter = data.repeatAfter;
+        this.repeat = data.repeatAfter > 0;
         this.fps = data.fps;
         this.useAlpha = data.useAlpha;
         this.useColor = data.useColor;
+        this.useBorders = data.useBorders;
+        this.borderColor = data.borderColor;
         this.infinite = data.infinite;
         this.interactiveCells = data.interactiveCells
+        this.relative = data.relativeObject.length > 0;
+        this.relativeObject = document.getElementById(data.relativeObject);
+        this.label = data.label;
+        this.hasLabel = data.label.length > 0;
+        this.gridObject = this.relative ? this.relativeObject.appendChild(document.createElement('div')) : document.body;
         if(this.relative){
-            this.relativeObject = document.getElementById(data.relativeObject);
-            this.relativeObject.style.display = 'grid'
-            this.relativeObject.style.gridTemplateColumns = `repeat(${this.width} , ${this.cellSize}px)`
-            this.relativeObject.style.gridTemplateRows = `repeat(${this.height} , ${this.cellSize}px)`
+            this.relativeObject.style.alignText = "center"
+            this.gridObject.style.justifyContent = "center"
+            this.gridObject.style.display = 'grid'
+            this.gridObject.style.gridTemplateColumns = `repeat(${this.width} , ${this.cellSize}px)`
+            this.gridObject.style.gridTemplateRows = `repeat(${this.height} , ${this.cellSize}px)`
         }
+        if(this.hasLabel){
+            let text = document.createElement('div');
+            text.class = "label"
+            text.innerHTML = this.label;
+            if(this.relative) this.relativeObject.appendChild(text)
+            else document.body.appendChild(text);
+        }
+
         this.count = 0;
         this.playing = true;
         this.initCells = data.initCells;
         let random = data.initCells == 0;
         for(let x = 0; x < this.width; x++){
-            for(let y = 0; y < this.height; y++){
+            for(let y = this.height - 1; y >= 0; y--){
                 const cell = new Cell({
                     position : [x, y], size : this.cellSize, useColor : this.useColor, interactive : this.interactiveCells, relative: this.relative})
                 cell.id = this.cells.length;
                 this.cells.push(cell)
+                if(this.useBorders){
+                    if(x == 0 && y == 0){
+                        cell.body.style.borderLeft = `solid ${this.borderColor.toString()} 1px`
+                        cell.body.style.borderTop = `solid ${this.borderColor.toString()} 1px`
+                        cell.bordercolor = this.borderColor;
+                    }
+                    else if(x == 0 && y == this.height - 1){
+                        cell.body.style.borderLeft = `solid ${this.borderColor.toString()} 1px`
+                        cell.bordercolor = this.borderColor;
+                        cell.body.style.borderBottom = `solid ${this.borderColor.toString()} 1px`
+                    }
+                    else if(y == this.height - 1 && x == this.width -1){
+                        cell.body.style.borderRight = `solid ${this.borderColor.toString()} 1px`
+                        cell.bordercolor = this.borderColor;
+                        cell.body.style.borderBottom = `solid ${this.borderColor.toString()} 1px`
+                    }
+                    else if(x == this.width -1 && y == 0){ 
+                        cell.body.style.borderRight = `solid ${this.borderColor.toString()} 1px`
+                        cell.bordercolor = this.borderColor;
+                        cell.body.style.borderTop = `solid ${this.borderColor.toString()} 1px`
+                    }
+                    else if(x == this.width -1){
+                        cell.bordercolor = this.borderColor;
+                        cell.body.style.borderRight = `solid ${this.borderColor.toString()} 1px`
+                    }
+                    else if(x == 0){
+                        cell.body.style.borderLeft = `solid ${this.borderColor.toString()} 1px`
+                        cell.bordercolor = this.borderColor;
+                    }
+                    else if(y == this.height - 1){
+                        cell.bordercolor = this.borderColor;
+                        cell.body.style.borderBottom = `solid ${this.borderColor.toString()} 1px`
+                    }
+                    else if(y == 0){ 
+                        cell.body.style.borderTop = `solid ${this.borderColor.toString()} 1px`
+                        cell.bordercolor = this.borderColor;
+                    }
+                }
 
-                if(this.relative){
-                    this.relativeObject.appendChild(cell.body)
-                }
-                else{
-                    document.body.appendChild(cell.body)
-                }
+                    this.gridObject.appendChild(cell.body)
                 if(random){
                     if(Rand(0, 100) > 50 && (x < Math.floor(this.width * 0.2) || x >  Math.floor(this.width * 0.8))){
                         cell.state = 1;
@@ -179,11 +249,45 @@ class Grid {
 
             }
         }
-        if(!random){
-            for(const id of data.initCells)
-            {
-                this.cells[id].state = 1;
+
+        for(let i = this.cells.length - 1; i >= 0; i--){
+            if(this.cells[i].pos[0] == 0 && this.cells[i].pos[1] == 0){
+                this.borderCells.push(this.cells[i].id)
             }
+            else if(this.cells[i].pos[0] == 0 && this.cells[i].pos[1] != this.height - 1 && this.cells[i].pos[1] != 0){
+                this.borderCells.push(this.cells[i].id)
+            }
+        }
+
+        for(const cell of this.cells){
+            if(cell.pos[0] == 0 && cell.pos[1] == this.height - 1){
+                this.borderCells.push(cell.id)
+            }
+            else if(cell.pos[1] == this.height - 1 && cell.pos[0] != 0 && cell.pos[0] != this.width -1){
+                this.borderCells.push(cell.id)
+            }
+        }
+
+        for(const cell of this.cells){
+            if(cell.pos[0] == this.width - 1 && cell.pos[1] == this.height - 1){
+                this.borderCells.push(cell.id)
+            }
+            else if(cell.pos[0] == this.width - 1 && cell.pos[1] != 0 && cell.pos[1] != this.height - 1){
+                this.borderCells.push(cell.id)
+            }
+        }
+        for(let i = this.cells.length - 1; i >= 0; i--){
+            if(this.cells[i].pos[0] == this.width - 1 && this.cells[i].pos[1] == 0){
+                this.borderCells.push(this.cells[i].id)
+            }
+            else if(this.cells[i].pos[1] == 0 && this.cells[i].pos[0] != 0 && this.cells[i].pos[0] != this.width - 1){
+                this.borderCells.push(this.cells[i].id)
+            }
+        }
+
+        if(!random){
+            for(const id of data.initCells) this.cells[id].state = 1;
+            
         }
     }
 
@@ -236,6 +340,7 @@ class Grid {
     }else{
         if(this.repeat){
             if(this.generation % this.repeatAfter == 0){
+                this.clear()
                 for(const id of this.initCells) this.cells[id].state = 1
             }
         }
@@ -251,8 +356,9 @@ class Grid {
           }
           else {
               cell.state = 0
-          }
-
+            }
+            
+        
         if(this.useColor){
             if (cell.state == 0) {
                 cell.color = Color.lerpColors(cell.color, blackColor, this.useAlpha ? 0.25 : 1.0)
@@ -271,14 +377,31 @@ class Grid {
           if(cell.state == 1){
               cell.color = Color.lerpColors(cell.color, whiteColor, this.useAlpha ? 0.1 : 1.0)
               cell.body.style.backgroundColor = cell.color.toString()
+
           }else { 
               cell.color = Color.lerpColors(cell.color, blackColor, this.useAlpha ? 0.25 : 1.0)
               cell.body.style.backgroundColor = cell.color.toString()
           }
+
+          
+          
         }
     }
-        this.generation+=1;
+
+    if(this.useBorders){
+        let cell = this.cells[this.borderCells[this.currentBorderCell]]
+        if(cell){
+            cell.borderColor = Color.lerpColors(cell.borderColor, highlightColor, 0.25);
+            cell.body.style.borderColor = cell.borderColor.toString()
+            if(this.currentBorderCell + 1 == this.borderCells.length) this.currentBorderCell = 0;
+            else this.currentBorderCell++;
+        }
     }
+    
+    this.generation+=1;
+    }
+
+  
 
     toggleColor(){
         this.useColor = !this.useColor;

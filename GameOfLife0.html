@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js navy">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="global.css">
 
         <!-- MathJax -->
         <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -38,7 +39,7 @@
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "navy";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -64,7 +65,7 @@
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
             html.classList.remove('no-js')
-            html.classList.remove('light')
+            html.classList.remove('navy')
             html.classList.add(theme);
             html.classList.add('js');
         </script>
@@ -101,10 +102,10 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
@@ -117,6 +118,9 @@
                     <div class="right-buttons">
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/KorieDrakeChaney/Artificial-Life-Book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
 
                     </div>
@@ -147,20 +151,20 @@
                         <br>
 <h1 style = "text-align: center;"> Getting Started </h1>
 <hr />
-<div style = "background-color : rgba(0, 0, 0, 0.05); text-align: center; border-left : solid black 2px; border-right : solid black 2px;" id="title">
+<div class="primary-header">
 <span style="font-size : 30px;"><b>Conway's Game of Life</b></span>
 </div>
-<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05);  border-left : solid black 2px; border-right : solid black 2px;">
-<p>Conway's Game of Life is a very simple but rewarding project, understanding it and doing it on your own is such a great feeling. I will be walking you through it with the basic logic while creating programming building blocks along the way.</p>
-<p>We're evolving from a one-dimensional CA to now a two-dimensional CA adding complexity as we will have a larger neighborhood of <b>9</b>, contrast to the simple neighborhood of <b>3</b>  in Elementary Cellular Automata.</p>
-<div id="neighborhood" style="display: grid;">
+<div class="container">
+<p>Conway’s Game of Life is a very simple but rewarding project, understanding it and doing it on your own is such a great feeling. I will be walking you through it with the basic logic while creating programming building blocks along the way.</p>
+<p>We’re evolving from a one-dimensional CA to now a two-dimensional CA adding complexity as we will have a larger neighborhood of <b>9</b>, contrast to the simple neighborhood of <b>3</b>  in Elementary Cellular Automata.</p>
 <video controls>
 <source src="Neighborhood.mp4" type="video/mp4">
 </video>
 </div>
-<p>This carries the same concept of a world of cells, which carry 2 states, 0 or 1, <b style="color:green;">alive</b> or <b style="color:red;">dead</b>.</p>
+<div class ="container"> 
+This carries the same concept of a world of cells, which carry 2 states, 0 or 1, <b style="color:green;">alive</b> or <b style="color:red;">dead</b>.
 <p>As for the rules, there are 3 basic rules:</p>
-<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px; border-bottom : solid black 2px; border-top : solid black 2px;">
+<div class="explanation">
 <ul>
 <li>
 <p>(1) <i>Survival</i>: If a cell is in state 1 (<b style="color:green;">alive</b>)
@@ -183,6 +187,7 @@ neighbors.</p>
 </li>
 </ul>
 </div>
+<br>
 <video style="background: solid 1px white" controls>
 <source src="RuleExplanation.mp4" type="video/mp4">
 </video>
@@ -191,20 +196,84 @@ neighbors.</p>
 <script src="ConwaysGameOfLife.js">
 
 </script>
-<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05);  border-left : solid black 2px; border-right : solid black 2px;">
-<p>With these simple rules, many variations can occur: </p>
-<p><b>Static</b></p>
-<div style = "padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px; border-bottom : solid black 2px; border-top : solid black 2px;">
-</div>
 <script>
-    let grid = new Grid({width : Math.floor(window.innerWidth / 20), height : Math.floor(window.innerHeight / 20)})
+    let grid = new Grid({ useAlpha : true})
 
     grid.startAnimating();
 </script>
+<div class="container">
+<p>With these simple rules, many patterns can occur. Common pattern types include <b class="defintion"><a  href="https://conwaylife.com/wiki/Still_life" target="_blank">still lifes</a></b>, which do not change, <b class="defintion"><a  style="" href="https://conwaylife.com/wiki/Oscillator" target="_blank">oscillators</a></b>, which return to their initial state after several generations, and <b class="defintion"><a href="https://conwaylife.com/wiki/Spaceships" target="_blank">spaceships</a></b>, which travel across the grid !</p>
+</div>
 <hr />
-<p>Copyright (C) 2022, Korie Chaney.</p>
+<div class="primary-header">
+<span style="font-size : 30px;"><b>Still Lives</b></span>
+<br>
+<span style="color:grey">Boring Dudes</span>
+</div>
+<div class ="container">
+<div class="explanation" style="text-align:center"><div id="block"></div></div>
+<div class="explanation" style="text-align:center"><div id="beehive"></div></div>
+<div class="explanation" style="text-align:center"><div id="loaf"></div></div>
+<div class="explanation" style="text-align:center"><div id="boat"></div></div>
+<div class="explanation" style="text-align:center"><div id="tub"></div></div>
+</div>
 <hr />
+<div class="primary-header">
+<span style="font-size : 30px;"><b>Oscillators</b></span>
+<br>
+<span style="color:grey">Amazing</span>
+</div>
+<div class ="container">
+<div class="explanation" style="text-align:center"><div id="blinker"></div></div>
+<div class="explanation" style="text-align:center"><div id="toad"></div></div>
+<div class="explanation" style="text-align:center"><div id="beacon"></div></div>
+<div class="explanation" style="text-align:center"><div id="pulsar"></div></div>
+<div class="explanation" style="text-align:center"><div id="pentadecathlon"></div></div>
+<div class="explanation" style="text-align:center"><div id="glidergun"></div></div>
+</div>
+<script>
+    let templates = [
+    ["blinker", {
+        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false}], 
+    ["block", {
+         infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
+    }], 
+    ["loaf", {
+        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
+    }], 
+    ["boat",  {
+        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
+    }
+    ], 
+    ["beehive", {
+        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
+    }], 
+    ["tub", {
+        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
+    }], [
+    "pulsar", {
+        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true, useColor : false
+    }
+    ], 
+    ["glidergun", {
+        infinite : true, cellSize : 10, repeatAfter : 40, useBorders : true, useColor : false
+    }], 
+    ["beacon", {
+        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true, useColor : false
+    }], 
+    ["toad", {
+        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true, useColor : false
+    }], 
+    ["pentadecathlon", {
+        infinite : true, cellSize : 10, repeatAfter : 25, useBorders : true, useColor : false
+    }]]
 
+    for(const template of templates){
+        let grid = Grid.to(template[0], {...{label : template[0], relativeObject : template[0]}, ...template[1]})
+        grid.startAnimating();
+    }
+</script>
+<footer id="footer"></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -267,6 +336,7 @@ neighbors.</p>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        <script type="text/javascript" src="global.js"></script>
 
 
     </body>
