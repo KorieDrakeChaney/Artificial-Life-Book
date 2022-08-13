@@ -1,0 +1,60 @@
+.container {
+    padding:2%; 
+    background-color : rgba(0, 0, 0, 0.05); 
+    border-left : solid black 2px; 
+    border-right : solid black 2px;
+}
+
+.link { 
+    color:rgba(0, 125, 125, 1);
+}
+
+.green-box { 
+    background-color : rgba(191, 245, 205, 0.75); 
+    padding:2% 1%
+}
+
+.red-box { 
+    background-color : rgba(240, 156, 156, 0.75); 
+    padding:2% 1%
+}
+
+.secondary-header { 
+    color: rgba(255, 125, 125, 0.75)
+}
+
+.primary-header { 
+    background-color : rgba(0, 0, 0, 0.05); 
+    text-align: center; 
+    border-left : solid black 2px; 
+    border-right : solid black 2px;
+}
+
+.definition { 
+    color : rgba(71, 255, 90, 1)
+}
+
+.function { 
+    color : rgba(232, 50, 37, 1)
+}
+
+.variable { 
+    color : rgba(65, 71, 250, 1)
+}
+
+.reference { 
+    color:rgba(100, 155, 155, 1); 
+    text-decoration:underline;
+}
+
+.explanation { 
+    padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px; border-bottom : solid black 2px; border-top : solid black 2px;
+}
+
+.label { 
+    color:grey; 
+    justify-content:center; 
+    text-align:center;
+    width : 100%;
+    height : 100%
+}

@@ -1,0 +1,19 @@
+{
+    "name": "artificial-life-book",
+    "version": "1.0.0",
+    "description": "Learning about artificial life : D",
+    "main": "index.js",
+    "scripts": {
+      "deploy" : "npx gh-pages -d book/book -t true"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/KorieDrakeChaney/Artificial-Life-Book.git"
+    },
+    "author": "KorieDrakeChaney",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/KorieDrakeChaney/Artificial-Life-Book/issues"
+    },
+    "homepage": "https://github.com/KorieDrakeChaney/Artificial-Life-Book#readme"
+  }
