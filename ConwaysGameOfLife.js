@@ -566,6 +566,26 @@ class Grid {
                 newData = {...data, ...{width : 40, height : 20, initCells : alive}}
                 grid = new Grid(newData)
                 break;
+            case "glider":
+                alive = [56, 76, 78, 96, 97]
+                newData = {...data, ...{width : 20, height : 20, initCells : alive}}
+                grid = new Grid(newData)
+                break;
+            case "lightweightspaceship":
+                alive = [194, 195, 196, 204, 207, 214, 224, 235, 237]
+                newData = {...data, ...{width : 25, height : 10, initCells : alive}}
+                grid = new Grid(newData)
+                break;
+            case "middleweightspaceship":
+                alive = [194, 195, 196, 203, 206, 216, 222, 226, 236, 243, 245]
+                newData = {...data, ...{width : 25, height : 10, initCells : alive}}
+                grid = new Grid(newData)
+                break;
+            case "heavyweightspaceship":
+                alive = [184, 185, 186, 194, 197, 204, 214, 218, 224, 228, 234, 245, 247]
+                newData = {...data, ...{width : 25, height : 10, initCells : alive}}
+                grid = new Grid(newData)
+                break;
             default:
                 grid = new Grid();
         }

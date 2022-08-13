@@ -231,6 +231,18 @@ neighbors.</p>
 <div class="explanation" style="text-align:center"><div id="pentadecathlon"></div></div>
 <div class="explanation" style="text-align:center"><div id="glidergun"></div></div>
 </div>
+<hr />
+<div class="primary-header">
+<span style="font-size : 30px;"><b>Spaceships</b></span>
+<br>
+<span style="color:grey">Beautiful</span>
+</div>
+<div class ="container">
+<div class="explanation" style="text-align:center"><div id="glider"></div></div>
+<div class="explanation" style="text-align:center"><div id="lightweightspaceship"></div></div>
+<div class="explanation" style="text-align:center"><div id="middleweightspaceship"></div></div>
+<div class="explanation" style="text-align:center"><div id="heavyweightspaceship"></div></div>
+</div>
 <script>
     let isMobile = /mobile/i.test(navigator.userAgent);
     let templates = [
@@ -267,7 +279,24 @@ neighbors.</p>
     }], 
     ["pentadecathlon", {
         infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 25, useBorders : true
-    }]]
+    }], 
+    ["glider", {
+        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
+    }], 
+    [
+    "lightweightspaceship", {
+        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
+    }
+    ], 
+    [
+    "middleweightspaceship", {
+        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
+    }
+    ], 
+    ["heavyweightspaceship", {
+        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
+    }
+    ]]
 
     for(const template of templates){
         let grid = Grid.to(template[0], {...{label : template[0], relativeObject : template[0]}, ...template[1]})
