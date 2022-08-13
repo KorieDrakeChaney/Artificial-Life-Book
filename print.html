@@ -256,7 +256,7 @@ neighbors.</p>
 
 </script>
 <script>
-    let grid = new Grid({ useAlpha : true})
+    let grid = new Grid({ width : Math.floor(window.innerWidth / 20), height : Math.floor(window.innerHeight / 20),  useAlpha : true })
 
     grid.startAnimating();
 </script>

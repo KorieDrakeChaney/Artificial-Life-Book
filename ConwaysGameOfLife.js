@@ -81,7 +81,7 @@ class Cell {
         else { 
             this.color = this.state == 0 ? blackColor : whiteColor
         }
-        this.body.style.zIndex = "10000000000000000000000"
+        this.body.style.zIndex = "10000000"
         if(data.relative){
             this.body.style.gridColumn = data.position[0] + 1;
             this.body.style.gridRow = data.position[1] + 1;
@@ -241,10 +241,11 @@ class Grid {
                 }
 
                     this.gridObject.appendChild(cell.body)
-                if(random){
-                    if(Rand(0, 100) > 50 && (x < Math.floor(this.width * 0.2) || x >  Math.floor(this.width * 0.8))){
-                        cell.state = 1;
-                    }
+                    if(random){
+                        if(Rand(0, 100) > 50 && (x < Math.floor(this.width * 0.2) || x >  Math.floor(this.width * 0.8))){
+                            cell.state = 1;
+                            console.log('a')
+                        }
                     this.initCells.push(cell.id);
                 }
 
@@ -381,7 +382,7 @@ class Grid {
         }
         else { 
           if(cell.state == 1){
-                let alpha = this.useAlpha ? 0.5 * 0.5 * (3 - 2 * 0.5) : 1.0;
+                let alpha = this.useAlpha ? 0.1 : 1.0;
                 cell.color = Color.lerpColors(cell.color, whiteColor, alpha)
                 cell.body.style.backgroundColor = cell.color.toString()
 
@@ -402,7 +403,6 @@ class Grid {
         if(cell){
             let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
             cell.borderColor = Color.lerpColors(cell.borderColor, this.useBorderColor ? this.borderColor : highlightColor, alpha);
-            console.log(cell.borderColor)
             cell.body.style.borderColor = cell.borderColor.toString()
             if(this.currentBorderCell + 1 == this.borderCells.length) this.currentBorderCell = 0;
             else this.currentBorderCell++;
