@@ -187,6 +187,9 @@ class Grid {
             let text = document.createElement('div');
             text.class = "label"
             text.innerHTML = this.label;
+            text.style.marginTop = "5px"
+            text.style.fontWeight = "bold"
+
             if(this.relative) this.relativeObject.appendChild(text)
             else document.body.appendChild(text);
         }
@@ -462,73 +465,82 @@ class Grid {
         let grid;
         let alive;
         let newData;
+        let label;
         switch (type){
             case "block":
-                let d;
+                label = "Block";
                 alive = [
                     5, 6, 9, 10
                 ]
-                newData = {...data, ...{width : 4, height : 4, initCells : alive}}
+                newData = {...data, ...{width : 4, height : 4, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "beehive":
+                label = "Beehive"
                 alive = [
                     7, 11, 13, 16, 18, 22
                 ]
-                newData = {...data, ...{width : 6, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "loaf":
+                label = "Loaf"
                 alive = [
                     8, 13, 15, 19, 22, 26, 27
                 ]
-                newData = {...data, ...{width : 6, height : 6, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 6, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "boat":
+                label = "Boat"
                 alive = [
                     6, 7, 11, 13, 17
                 ]
-                newData = {...data, ...{width : 5, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 5, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "tub":
+                label = "Tub"
                 alive = [
                     7, 11, 13, 17
                 ]
-                newData = {...data, ...{width : 5, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 5, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "blinker":
+                label = "Blinker"
                 alive = [
                     7, 12, 17
                 ]
-                newData = {...data, ...{width : 5, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 5, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "toad":
+                label = "Toad"
                 alive = [
                     9, 14, 15, 20, 21, 26
                 ]
-                newData = {...data, ...{width : 6, height : 6, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 6, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "beacon":
+                label = "Beacon";
                 alive = [
                     7, 8, 13, 22, 27, 28
                 ]
-                newData = {...data, ...{width : 6, height : 6, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 6, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "pulsar":
+                label = "Pulsar"
                 alive = [
                     38, 39, 45, 46, 
                     56, 57, 61, 62, 
@@ -546,44 +558,50 @@ class Grid {
 
 
                 ]
-                newData = {...data, ...{width : 17, height : 17, initCells : alive}}
+                newData = {...data, ...{width : 17, height : 17, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "pentadecathlon":
+                label = "Pentadecathlon"
                 alive = [
                     58, 59, 66, 67, 75, 78, 83, 86, 
                     93, 96, 101, 104, 111, 114, 119, 122, 
                     130, 131, 138, 139
                 ]
-                newData = {...data, ...{width : 11, height : 18, initCells : alive}}
+                newData = {...data, ...{width : 11, height : 18, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "glidergun":
+                label = "Glidergun"
                 alive = [
                     45, 46, 65, 66, 245, 246, 247, 264, 268, 283, 289, 303, 309, 326, 344, 348, 365, 366, 367, 386, 443, 444, 445, 463, 464, 465, 482, 486, 521, 522, 526, 527, 723, 724, 743, 744]
-                newData = {...data, ...{width : 40, height : 20, initCells : alive}}
+                newData = {...data, ...{width : 40, height : 20, initCells : alive, label}}
                 grid = new Grid(newData)
                 break;
             case "glider":
+                label = "Glider"
                 alive = [56, 76, 78, 96, 97]
-                newData = {...data, ...{width : 20, height : 20, initCells : alive}}
+                newData = {...data, ...{width : 20, height : 20, initCells : alive, label}}
                 grid = new Grid(newData)
                 break;
             case "lightweightspaceship":
+                label = "Lightweight Spaceship"
                 alive = [204, 205, 206, 213, 216, 226, 236, 243, 245]
-                newData = {...data, ...{width : 25, height : 10, initCells : alive}}
+                newData = {...data, ...{width : 25, height : 10, initCells : alive, label}}
                 grid = new Grid(newData)
                 break;
             case "middleweightspaceship":
+                label = "Middleweight Spaceship"
                 alive = [194, 195, 196, 203, 206, 216, 222, 226, 236, 243, 245]
-                newData = {...data, ...{width : 25, height : 10, initCells : alive}}
+                newData = {...data, ...{width : 25, height : 10, initCells : alive, label}}
                 grid = new Grid(newData)
                 break;
             case "heavyweightspaceship":
+                label = "Heavyweight Spaceship"
                 alive = [184, 185, 186, 194, 197, 204, 214, 218, 224, 228, 234, 245, 247]
-                newData = {...data, ...{width : 25, height : 10, initCells : alive}}
+                newData = {...data, ...{width : 25, height : 10, initCells : alive, label}}
                 grid = new Grid(newData)
                 break;
             default:
