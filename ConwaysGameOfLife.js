@@ -381,7 +381,7 @@ class Grid {
         }
         else { 
           if(cell.state == 1){
-                let alpha = this.useAlpha ? 0.1 * 0.1 * (3 - 2 * 0.1) : 1.0;
+                let alpha = this.useAlpha ? 0.5 * 0.5 * (3 - 2 * 0.5) : 1.0;
                 cell.color = Color.lerpColors(cell.color, whiteColor, alpha)
                 cell.body.style.backgroundColor = cell.color.toString()
 

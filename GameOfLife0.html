@@ -232,40 +232,41 @@ neighbors.</p>
 <div class="explanation" style="text-align:center"><div id="glidergun"></div></div>
 </div>
 <script>
+    let isMobile = /mobile/i.test(navigator.userAgent);
     let templates = [
     ["blinker", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true}], 
+        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true}], 
     ["block", {
-         infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true
+         infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
     }], 
     ["loaf", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true
+        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
     }], 
     ["boat",  {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true
+        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
     }
     ], 
     ["beehive", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true
+        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
     }], 
     ["tub", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true
+        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
     }], [
     "pulsar", {
-        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true
+        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 15, useBorders : true
     }
     ], 
     ["glidergun", {
-        infinite : true, cellSize : 10, repeatAfter : 40, useBorders : true
+        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 40, useBorders : true
     }], 
     ["beacon", {
-        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true
+        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
     }], 
     ["toad", {
-        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true
+        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
     }], 
     ["pentadecathlon", {
-        infinite : true, cellSize : 10, repeatAfter : 25, useBorders : true
+        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 25, useBorders : true
     }]]
 
     for(const template of templates){
