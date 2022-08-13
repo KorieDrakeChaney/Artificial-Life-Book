@@ -572,7 +572,7 @@ class Grid {
                 grid = new Grid(newData)
                 break;
             case "lightweightspaceship":
-                alive = [194, 195, 196, 204, 207, 214, 224, 235, 237]
+                alive = [204, 205, 206, 213, 216, 226, 236, 243, 245]
                 newData = {...data, ...{width : 25, height : 10, initCells : alive}}
                 grid = new Grid(newData)
                 break;
