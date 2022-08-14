@@ -1,10 +1,8 @@
 <br>
-<h1 style = "text-align: center;"> Getting Started </h1>
+<h1 style = "text-align: center;">Conway's Game of Life</h1>
+
 
 ---
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Conway's Game of Life</b></span>
-</div>
 
 <div class="container">
 
@@ -57,100 +55,19 @@ neighbors.
 </script>
 
 <script>
-    let grid = new Grid({ useAlpha : true})
+    let grid = new Grid({ width : Math.floor(window.innerWidth / 20), height : Math.floor(window.innerHeight / 20),  useAlpha : true , spread : true})
 
     grid.startAnimating();
 </script>
 
 <div class="container">
 
-With these simple rules, many patterns can occur. Common pattern types include <b class="defintion"><a  href="https://conwaylife.com/wiki/Still_life" target="_blank">still lifes</a></b>, which do not change, <b class="defintion"><a  style="" href="https://conwaylife.com/wiki/Oscillator" target="_blank">oscillators</a></b>, which return to their initial state after several generations, and <b class="defintion"><a href="https://conwaylife.com/wiki/Spaceships" target="_blank">spaceships</a></b>, which travel across the grid !
+With these simple rules, many patterns can occur. Common pattern types include <b class="defintion"><a  href="https://conwaylife.com/wiki/Still_life" target="_blank">still lifes</a></b>, which do not change, <b class="defintion"><a  style="" href="https://conwaylife.com/wiki/Oscillator" target="_blank">oscillators</a></b>, which return to their initial state after several generations, and <b class="defintion"><a href="https://conwaylife.com/wiki/Spaceships" target="_blank">spaceships</a></b>, which travel across the grid ! Visuals <b><a href="./GameOfLife2.html">Here</a></b>
 
+
+
+Now Let's get to <b><a href="./GameOfLife1.html">programming</a></b>!
 </div>
-
----
-
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Still Lives</b></span>
-<br>
-<span style="color:grey">Boring Dudes</span>
-</div>
-
-<div class ="container">
-
-<div class="explanation" style="text-align:center"><div id="block"></div></div>
-<div class="explanation" style="text-align:center"><div id="beehive"></div></div>
-<div class="explanation" style="text-align:center"><div id="loaf"></div></div>
-<div class="explanation" style="text-align:center"><div id="boat"></div></div>
-<div class="explanation" style="text-align:center"><div id="tub"></div></div>
-
-
-</div>
-
----
-
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Oscillators</b></span>
-<br>
-<span style="color:grey">Amazing</span>
-</div>
-
-<div class ="container">
-
-<div class="explanation" style="text-align:center"><div id="blinker"></div></div>
-<div class="explanation" style="text-align:center"><div id="toad"></div></div>
-<div class="explanation" style="text-align:center"><div id="beacon"></div></div>
-<div class="explanation" style="text-align:center"><div id="pulsar"></div></div>
-<div class="explanation" style="text-align:center"><div id="pentadecathlon"></div></div>
-<div class="explanation" style="text-align:center"><div id="glidergun"></div></div>
-
-
-
-
-</div>
-
-<script>
-    let templates = [
-    ["blinker", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false}], 
-    ["block", {
-         infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
-    }], 
-    ["loaf", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
-    }], 
-    ["boat",  {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
-    }
-    ], 
-    ["beehive", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
-    }], 
-    ["tub", {
-        infinite : true, cellSize : 20, repeatAfter : 15, useBorders : true, useColor : false
-    }], [
-    "pulsar", {
-        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true, useColor : false
-    }
-    ], 
-    ["glidergun", {
-        infinite : true, cellSize : 10, repeatAfter : 40, useBorders : true, useColor : false
-    }], 
-    ["beacon", {
-        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true, useColor : false
-    }], 
-    ["toad", {
-        infinite : true, cellSize : 10, repeatAfter : 15, useBorders : true, useColor : false
-    }], 
-    ["pentadecathlon", {
-        infinite : true, cellSize : 10, repeatAfter : 25, useBorders : true, useColor : false
-    }]]
-
-    for(const template of templates){
-        let grid = Grid.to(template[0], {...{label : template[0], relativeObject : template[0]}, ...template[1]})
-        grid.startAnimating();
-    }
-</script>
 
 
 <footer id="footer"></footer>

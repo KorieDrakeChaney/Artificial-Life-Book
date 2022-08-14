@@ -14,10 +14,20 @@ class Color {
         this.g = g;
         this.b = b;
         this.a = a;
+
+        this._initState = [this.r, this.g, this.b, this.a]
     }
 
     toString() {
         return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})` 
+    }
+
+    initState() {
+        return new Color(this._initState[0], this._initState[1], this._initState[2], this._initState[3])
+    }
+
+    copy(){
+        return new Color(this.r, this.g, this.b, this.a);
     }
 
     static lerpColors(colorA, colorB, alpha){
@@ -47,9 +57,7 @@ class Color {
 
 let blackColor = new Color(0, 0, 0, 0);
 let whiteColor = new Color(255, 255, 255, 1);
-let staticColor =  new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255))
-let aliveColor = new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255), 0.875)
-let highlightColor = new Color(255, 247, 0, 1);
+
 class Cell {
     constructor(data ={
         position : [0, 0], 
@@ -64,7 +72,8 @@ class Cell {
         this.id = 0;
         this.pos = data.position;
         this.borderColor = new Color()
-
+        this.staticColor =  new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255))
+        this.aliveColor = new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255), 0.875)
         if(data.position == undefined) data.position = [0, 0];
         if(data.size == undefined) data.size = 20;
         if(data.useColor == undefined) data.useColor = false;
@@ -76,12 +85,12 @@ class Cell {
         this.body.style.left = `${(data.position[0] * this.size)}px`;
         this.body.style.top = `${(data.position[1] * this.size)}px`;
         if(this.useColor){
-            this.color = this.state == 0 ? blackColor : aliveColor
+            this.color = this.state == 0 ? blackColor : this.aliveColor
         }
         else { 
             this.color = this.state == 0 ? blackColor : whiteColor
         }
-        this.body.style.zIndex = "10000000000000000000000"
+        this.body.style.zIndex = "10000000"
         if(data.relative){
             this.body.style.gridColumn = data.position[0] + 1;
             this.body.style.gridRow = data.position[1] + 1;
@@ -99,7 +108,7 @@ class Cell {
             this.body.addEventListener('click', () => {
                 this.state = this.state == 1 ? 0 : 1;
                 if(this.useColor){
-                    this.color = this.state == 0 ? blackColor : aliveColor;
+                    this.color = this.state == 0 ? blackColor : this.aliveColor;
                 }
                 else { 
                     this.color = this.state == 0 ? blackColor : whiteColor
@@ -128,6 +137,8 @@ class Grid {
         label : "", 
         useBorders : false, 
         borderColor : new Color(255, 255, 255, 0.5),
+        random : false,
+        spread : false,
          
     }){
         if(data.width == undefined) data.width = 20;
@@ -146,12 +157,19 @@ class Grid {
         if(data.offset == undefined) data.offset = [0, 0];
         if(data.relativeObject == undefined) data.relativeObject =  "";
         if(data.label == undefined) data.label =  "";
+        if(data.random == undefined) data.random =  false;
+        if(data.spread == undefined) data.spread =  false;
 
+
+   
+        this.cellItterator = 0;
         this.borderCells = [];
         this.currentBorderCell = 0;
+        this.useBorderColor = true
         this.cells = [];
         this.fpsInterval = 1000 / data.fps;
         this.startTime;
+        this.spread = data.spread;
         this.now;
         this.then;
         this.elapsed;
@@ -166,14 +184,16 @@ class Grid {
         this.fps = data.fps;
         this.useAlpha = data.useAlpha;
         this.useColor = data.useColor;
+
         this.useBorders = data.useBorders;
         this.borderColor = data.borderColor;
         this.infinite = data.infinite;
         this.interactiveCells = data.interactiveCells
-        this.relative = data.relativeObject.length > 0;
         this.relativeObject = document.getElementById(data.relativeObject);
+        this.relative = this.relativeObject != undefined;
         this.label = data.label;
         this.hasLabel = data.label.length > 0;
+        this.random = data.random;
         this.gridObject = this.relative ? this.relativeObject.appendChild(document.createElement('div')) : document.body;
         if(this.relative){
             this.relativeObject.style.alignText = "center"
@@ -186,6 +206,9 @@ class Grid {
             let text = document.createElement('div');
             text.class = "label"
             text.innerHTML = this.label;
+            text.style.marginTop = "5px"
+            text.style.fontWeight = "bold"
+
             if(this.relative) this.relativeObject.appendChild(text)
             else document.body.appendChild(text);
         }
@@ -193,14 +216,14 @@ class Grid {
         this.count = 0;
         this.playing = true;
         this.initCells = data.initCells;
-        let random = data.initCells == 0;
         for(let x = 0; x < this.width; x++){
             for(let y = this.height - 1; y >= 0; y--){
                 const cell = new Cell({
                     position : [x, y], size : this.cellSize, useColor : this.useColor, interactive : this.interactiveCells, relative: this.relative})
                 cell.id = this.cells.length;
                 this.cells.push(cell)
-                if(this.useBorders){
+                if(this.useBorders)
+                {
                     if(x == 0 && y == 0){
                         cell.body.style.borderLeft = `solid ${this.borderColor.toString()} 1px`
                         cell.body.style.borderTop = `solid ${this.borderColor.toString()} 1px`
@@ -239,16 +262,22 @@ class Grid {
                     }
                 }
 
-                    this.gridObject.appendChild(cell.body)
-                if(random){
+                this.gridObject.appendChild(cell.body)
+                if(this.spread){
                     if(Rand(0, 100) > 50 && (x < Math.floor(this.width * 0.2) || x >  Math.floor(this.width * 0.8))){
                         cell.state = 1;
+                        console.log(cell.state);
                     }
-                    this.initCells.push(cell.id);
+    
                 }
-
             }
+
+
         }
+
+        this.highlightColor = new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255), 0.875)
+        
+        if(this.random) this.randomize()
 
         for(let i = this.cells.length - 1; i >= 0; i--){
             if(this.cells[i].pos[0] == 0 && this.cells[i].pos[1] == 0){
@@ -283,11 +312,6 @@ class Grid {
             else if(this.cells[i].pos[1] == 0 && this.cells[i].pos[0] != 0 && this.cells[i].pos[0] != this.width - 1){
                 this.borderCells.push(this.cells[i].id)
             }
-        }
-
-        if(!random){
-            for(const id of data.initCells) this.cells[id].state = 1;
-            
         }
     }
 
@@ -341,7 +365,11 @@ class Grid {
         if(this.repeat){
             if(this.generation % this.repeatAfter == 0){
                 this.clear()
-                for(const id of this.initCells) this.cells[id].state = 1
+                if(this.random) this.randomize();
+                else for(const id of this.initCells) this.cells[id].state = 1
+            }
+            if(this.generation % this.borderCells.length == 0){
+                this.toggleBorderColor()
             }
         }
     }
@@ -361,26 +389,31 @@ class Grid {
         
         if(this.useColor){
             if (cell.state == 0) {
-                cell.color = Color.lerpColors(cell.color, blackColor, this.useAlpha ? 0.25 : 1.0)
+                let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+                cell.color = Color.lerpColors(cell.color, blackColor, alpha)
                 cell.body.style.backgroundColor = cell.color.toString()
             }
             else if(cell.prevState == 0 && cell.state == 1){
-                cell.color = Color.lerpColors(cell.color, aliveColor, this.useAlpha ? 0.5 : 1.0)
+                let alpha = this.useAlpha ? 0.5 * 0.5 * (3 - 2 * 0.5) : 1.0;
+                cell.color = Color.lerpColors(cell.color, this.cells[this.cellItterator].aliveColor, alpha)
                 cell.body.style.backgroundColor = cell.color.toString()
             }
             else if(cell.prevState == 1 && cell.state == 1){
-                cell.color = Color.lerpColors(cell.color, staticColor, this.useAlpha ? 0.25 : 1.0)
+                cell.color = Color.lerpColors(cell.color, this.cells[this.cellItterator].staticColor, this.useAlpha ? 0.25 : 1.0)
                 cell.body.style.backgroundColor = cell.color.toString()
             }
         }
         else { 
           if(cell.state == 1){
-              cell.color = Color.lerpColors(cell.color, whiteColor, this.useAlpha ? 0.1 : 1.0)
-              cell.body.style.backgroundColor = cell.color.toString()
+                let alpha = this.useAlpha ? 0.1 : 1.0;
+                cell.color = Color.lerpColors(cell.color, whiteColor, alpha)
+                cell.body.style.backgroundColor = cell.color.toString()
 
           }else { 
-              cell.color = Color.lerpColors(cell.color, blackColor, this.useAlpha ? 0.25 : 1.0)
-              cell.body.style.backgroundColor = cell.color.toString()
+                let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+
+                cell.color = Color.lerpColors(cell.color, blackColor, alpha)
+                cell.body.style.backgroundColor = cell.color.toString()
           }
 
           
@@ -391,7 +424,8 @@ class Grid {
     if(this.useBorders){
         let cell = this.cells[this.borderCells[this.currentBorderCell]]
         if(cell){
-            cell.borderColor = Color.lerpColors(cell.borderColor, highlightColor, 0.25);
+            let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+            cell.borderColor = Color.lerpColors(cell.borderColor, this.highlightColor, alpha);
             cell.body.style.borderColor = cell.borderColor.toString()
             if(this.currentBorderCell + 1 == this.borderCells.length) this.currentBorderCell = 0;
             else this.currentBorderCell++;
@@ -408,18 +442,29 @@ class Grid {
         for(const cell of this.cells)cell.useColor = this.useColor;
     }
 
+    toggleBorderColor(){
+        this.highlightColor = new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255), 0.875)
+    }
+
+
     clear(){ 
         for(const cell of this.cells) cell.state = 0;
     }
 
+    randomize() {
+        for(const cell of this.cells) 
+        {
+            cell.state = Rand(0, 100) > 75 ? 1 : 0
+            if(cell.state == 1) {this.initCells.push(cell.id)}
+
+        }
+
+        this.cellItterator = this.cellItterator + 1 == this.cells.length ? 0 : this.cellItterator + 1;
+    }
+
     fullClear(){ 
         for(const cell of this.cells){
-            if(this.relative){
-                this.relativeObject.removeChild(cell.body)
-            }
-            else { 
-                document.body.removeChild(cell.body);
-            }
+            this.gridObject.removeChild(cell.body)
             this.playing = false;
     }
     }
@@ -431,11 +476,11 @@ class Grid {
     }
 
     animate(){
-        requestAnimationFrame(this.animate.bind(this));
+        if(this.playing) requestAnimationFrame(this.animate.bind(this));
 
         this.now = Date.now();
         this.elapsed = this.now - this.then;
-        if (this.elapsed > this.fpsInterval && this.playing) {
+        if (this.elapsed > this.fpsInterval) {
 
             this.then = this.now - (this.elapsed % this.fpsInterval);
             this.MainLoop()
@@ -446,73 +491,86 @@ class Grid {
         let grid;
         let alive;
         let newData;
+        let label;
         switch (type){
             case "block":
-                let d;
+                label = "Block";
+                let width = 4, height = 4
                 alive = [
                     5, 6, 9, 10
                 ]
-                newData = {...data, ...{width : 4, height : 4, initCells : alive}}
+                
+
+
+                newData = {...data, ...{width, height , initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "beehive":
+                label = "Beehive"
                 alive = [
                     7, 11, 13, 16, 18, 22
                 ]
-                newData = {...data, ...{width : 6, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "loaf":
+                label = "Loaf"
                 alive = [
                     8, 13, 15, 19, 22, 26, 27
                 ]
-                newData = {...data, ...{width : 6, height : 6, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 6, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "boat":
+                label = "Boat"
                 alive = [
                     6, 7, 11, 13, 17
                 ]
-                newData = {...data, ...{width : 5, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 5, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "tub":
+                label = "Tub"
                 alive = [
                     7, 11, 13, 17
                 ]
-                newData = {...data, ...{width : 5, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 5, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "blinker":
+                label = "Blinker"
                 alive = [
                     7, 12, 17
                 ]
-                newData = {...data, ...{width : 5, height : 5, initCells : alive}}
+                newData = {...data, ...{width : 5, height : 5, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "toad":
+                label = "Toad"
                 alive = [
                     9, 14, 15, 20, 21, 26
                 ]
-                newData = {...data, ...{width : 6, height : 6, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 6, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "beacon":
+                label = "Beacon";
                 alive = [
                     7, 8, 13, 22, 27, 28
                 ]
-                newData = {...data, ...{width : 6, height : 6, initCells : alive}}
+                newData = {...data, ...{width : 6, height : 6, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "pulsar":
+                label = "Pulsar"
                 alive = [
                     38, 39, 45, 46, 
                     56, 57, 61, 62, 
@@ -530,24 +588,50 @@ class Grid {
 
 
                 ]
-                newData = {...data, ...{width : 17, height : 17, initCells : alive}}
+                newData = {...data, ...{width : 17, height : 17, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "pentadecathlon":
+                label = "Pentadecathlon"
                 alive = [
                     58, 59, 66, 67, 75, 78, 83, 86, 
                     93, 96, 101, 104, 111, 114, 119, 122, 
                     130, 131, 138, 139
                 ]
-                newData = {...data, ...{width : 11, height : 18, initCells : alive}}
+                newData = {...data, ...{width : 11, height : 18, initCells : alive, label}}
                 grid = new Grid(newData)
                 
                 break;
             case "glidergun":
+                label = "Glidergun"
                 alive = [
                     45, 46, 65, 66, 245, 246, 247, 264, 268, 283, 289, 303, 309, 326, 344, 348, 365, 366, 367, 386, 443, 444, 445, 463, 464, 465, 482, 486, 521, 522, 526, 527, 723, 724, 743, 744]
-                newData = {...data, ...{width : 40, height : 20, initCells : alive}}
+                newData = {...data, ...{width : 40, height : 20, initCells : alive, label}}
+                grid = new Grid(newData)
+                break;
+            case "glider":
+                label = "Glider"
+                alive = [56, 76, 78, 96, 97]
+                newData = {...data, ...{width : 20, height : 20, initCells : alive, label}}
+                grid = new Grid(newData)
+                break;
+            case "lightweightspaceship":
+                label = "Lightweight Spaceship"
+                alive = [204, 205, 206, 213, 216, 226, 236, 243, 245]
+                newData = {...data, ...{width : 25, height : 10, initCells : alive, label}}
+                grid = new Grid(newData)
+                break;
+            case "middleweightspaceship":
+                label = "Middleweight Spaceship"
+                alive = [194, 195, 196, 203, 206, 216, 222, 226, 236, 243, 245]
+                newData = {...data, ...{width : 25, height : 10, initCells : alive, label}}
+                grid = new Grid(newData)
+                break;
+            case "heavyweightspaceship":
+                label = "Heavyweight Spaceship"
+                alive = [184, 185, 186, 194, 197, 204, 214, 218, 224, 228, 234, 245, 247]
+                newData = {...data, ...{width : 25, height : 10, initCells : alive, label}}
                 grid = new Grid(newData)
                 break;
             default:
