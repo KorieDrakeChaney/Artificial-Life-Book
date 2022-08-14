@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Section 1 - Getting Started</title>
+        <title>Programming the Game of Life</title>
 
 
         <!-- Custom HTML head -->
@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Section 1 - Getting Started</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html" class="active"><strong aria-hidden="true">2.1.</strong> Section 1 - Getting Started</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Programming Elementary Cellular Automata</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata2.html"><strong aria-hidden="true">1.2.</strong> Patterns</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html" class="active"><strong aria-hidden="true">2.1.</strong> Programming the Game of Life</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html"><strong aria-hidden="true">2.2.</strong> Patterns</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,10 +148,37 @@
 
                 <div id="content" class="content">
                     <main>
-                        <div class="primary-header">
-<span style="font-size : 30px;"><b>Conway's Game of Life</b></span>
+                        <br>
+<h1 style = "text-align: center;"> Programming The Game of Life</h1>
+<hr />
+<div class = "container">
+<h2 class="secondary-header">Tools We Will Be Using</h2>
+    <div class = "example"> 
+<ul>
+<li><a class="reference" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank">Classes</a></li>
+<li><a class="reference" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration" target="_blank">For Loops</a></li>
+<li><a class="reference" href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" target="_blank">requestAnimationFrame</a></li>
+<li><b>Math</b>.<a class="reference" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random" target="_blank">random</a></li>
+<li><a class="reference" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else" target="_blank">if…else</a></li>
+</ul>
+<p>Be familiar with these, as we will be using them, so I do not want you to be confused later on.
+</div></p>
 </div>
-<div class="container">
+<hr />
+<div class="container"> 
+<h2 class="secondary-header">Creating The Grid</h2>
+<p>First we would need to create the grid, it’s the main thing, without it, no cells, no anything.</p>
+<pre><code class="language-js">const createGrid = (width, height) =&gt; {
+    for(let column = 0; column &lt; width; column++){
+        for(let row = 0; row &lt; height; row++){
+            // fun stuff
+        }
+    }
+}
+</code></pre>
+</div>
+<div class="container"> 
+    Here we have the <b class="function">createGrid</b> function, or whatever you name it. Right now, on it's own, does nothing, 
 </div>
                     </main>
 
@@ -161,6 +188,9 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next" href="GameOfLife2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -172,6 +202,9 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next" href="GameOfLife2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
@@ -199,6 +232,11 @@
             window.playground_copyable = true;
         </script>
 
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>

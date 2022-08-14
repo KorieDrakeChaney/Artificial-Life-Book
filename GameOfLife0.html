@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Section 1 - Getting Started</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html" class="active"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html"><strong aria-hidden="true">2.1.</strong> Section 1 - Getting Started</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Programming Elementary Cellular Automata</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata2.html"><strong aria-hidden="true">1.2.</strong> Patterns</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html" class="active"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html"><strong aria-hidden="true">2.1.</strong> Programming the Game of Life</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html"><strong aria-hidden="true">2.2.</strong> Patterns</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,9 +148,9 @@
 
                 <div id="content" class="content">
                     <main>
-                        <div class="primary-header">
-<span style="font-size : 30px;"><b>Conway's Game of Life</b></span>
-</div>
+                        <br>
+<h1 style = "text-align: center;">Conway's Game of Life</h1>
+<hr />
 <div class="container">
 <p>Conway’s Game of Life is a very simple but rewarding project, understanding it and doing it on your own is such a great feeling. I will be walking you through it with the basic logic while creating programming building blocks along the way.</p>
 <p>We’re evolving from a one-dimensional CA to now a two-dimensional CA adding complexity as we will have a larger neighborhood of <b>9</b>, contrast to the simple neighborhood of <b>3</b>  in Elementary Cellular Automata.</p>
@@ -194,118 +194,20 @@ neighbors.</p>
 
 </script>
 <script>
-    let grid = new Grid({ width : Math.floor(window.innerWidth / 20), height : Math.floor(window.innerHeight / 20),  useAlpha : true })
+    let grid = new Grid({ width : Math.floor(window.innerWidth / 20), height : Math.floor(window.innerHeight / 20),  useAlpha : true , spread : true})
 
     grid.startAnimating();
 </script>
 <div class="container">
-<p>With these simple rules, many patterns can occur. Common pattern types include <b class="defintion"><a  href="https://conwaylife.com/wiki/Still_life" target="_blank">still lifes</a></b>, which do not change, <b class="defintion"><a  style="" href="https://conwaylife.com/wiki/Oscillator" target="_blank">oscillators</a></b>, which return to their initial state after several generations, and <b class="defintion"><a href="https://conwaylife.com/wiki/Spaceships" target="_blank">spaceships</a></b>, which travel across the grid !</p>
+<p>With these simple rules, many patterns can occur. Common pattern types include <b class="defintion"><a  href="https://conwaylife.com/wiki/Still_life" target="_blank">still lifes</a></b>, which do not change, <b class="defintion"><a  style="" href="https://conwaylife.com/wiki/Oscillator" target="_blank">oscillators</a></b>, which return to their initial state after several generations, and <b class="defintion"><a href="https://conwaylife.com/wiki/Spaceships" target="_blank">spaceships</a></b>, which travel across the grid ! Visuals <b><a href="./GameOfLife2.html">Here</a></b></p>
+<p>Now Let’s get to <b><a href="./GameOfLife1.html">programming</a></b>!</p>
 </div>
-<hr />
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Still Lives</b></span>
-<br>
-<span style="color:grey">Boring Dudes</span>
-</div>
-<div class ="container">
-<div class="explanation" style="text-align:center"><div id="block"></div></div>
-<div class="explanation" style="text-align:center"><div id="beehive"></div></div>
-<div class="explanation" style="text-align:center"><div id="loaf"></div></div>
-<div class="explanation" style="text-align:center"><div id="boat"></div></div>
-<div class="explanation" style="text-align:center"><div id="tub"></div></div>
-</div>
-<hr />
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Oscillators</b></span>
-<br>
-<span style="color:grey">Amazing</span>
-</div>
-<div class ="container">
-<div class="explanation" style="text-align:center"><div id="blinker"></div></div>
-<div class="explanation" style="text-align:center"><div id="toad"></div></div>
-<div class="explanation" style="text-align:center"><div id="beacon"></div></div>
-<div class="explanation" style="text-align:center"><div id="pulsar"></div></div>
-<div class="explanation" style="text-align:center"><div id="pentadecathlon"></div></div>
-<div class="explanation" style="text-align:center"><div id="glidergun"></div></div>
-</div>
-<hr />
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Spaceships</b></span>
-<br>
-<span style="color:grey">Beautiful</span>
-</div>
-<div class ="container">
-<div class="explanation" style="text-align:center"><div id="glider"></div></div>
-<div class="explanation" style="text-align:center"><div id="lightweightspaceship"></div></div>
-<div class="explanation" style="text-align:center"><div id="middleweightspaceship"></div></div>
-<div class="explanation" style="text-align:center"><div id="heavyweightspaceship"></div></div>
-</div>
-<script>
-    let isMobile = /mobile/i.test(navigator.userAgent);
-    let templates = [
-    ["blinker", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true}], 
-    ["block", {
-         infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["loaf", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["boat",  {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }
-    ], 
-    ["beehive", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["tub", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], [
-    "pulsar", {
-        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 15, useBorders : true
-    }
-    ], 
-    ["glidergun", {
-        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 40, useBorders : true
-    }], 
-    ["beacon", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["toad", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["pentadecathlon", {
-        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 25, useBorders : true
-    }], 
-    ["glider", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }], 
-    [
-    "lightweightspaceship", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }
-    ], 
-    [
-    "middleweightspaceship", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }
-    ], 
-    ["heavyweightspaceship", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }
-    ]]
-
-    for(const template of templates){
-        let grid = Grid.to(template[0], {...{label : template[0], relativeObject : template[0]}, ...template[1]})
-        grid.startAnimating();
-    }
-</script>
 <footer id="footer"></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ElementaryCellularAutomata1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ElementaryCellularAutomata2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -319,7 +221,7 @@ neighbors.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ElementaryCellularAutomata1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ElementaryCellularAutomata2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
@@ -353,6 +255,11 @@ neighbors.</p>
             window.playground_copyable = true;
         </script>
 
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
