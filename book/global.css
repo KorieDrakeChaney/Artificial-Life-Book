@@ -6,7 +6,7 @@
 }
 
 .link { 
-    color:rgba(0, 125, 125, 1);
+    color:rgb(226, 195, 21);
 }
 
 .green-box { 
@@ -35,7 +35,7 @@
 }
 
 .function { 
-    color : rgba(232, 50, 37, 1)
+    color:rgb(94, 172, 172);
 }
 
 .variable { 
@@ -44,11 +44,14 @@
 
 .reference { 
     color:rgba(100, 155, 155, 1); 
-    text-decoration:underline;
 }
 
 .explanation { 
     padding:2%;background-color : rgba(0, 0, 0, 0.05); border-left : solid black 2px; border-right : solid black 2px; border-bottom : solid black 2px; border-top : solid black 2px;
+}
+
+.keyword { 
+    color:rgb(167, 113, 172); 
 }
 
 .label { 

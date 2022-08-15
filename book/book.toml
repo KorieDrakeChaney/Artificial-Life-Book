@@ -21,3 +21,6 @@ git-repository-url = "https://github.com/KorieDrakeChaney/Artificial-Life-Book"
 git-repository-icon = "fa-github"
 site-url = "https://koriedrakechaney.github.io/Artificial-Life-Book/"
 input-404 = "not-found.md"
+
+[output.html.print]
+enable = false

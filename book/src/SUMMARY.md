@@ -3,5 +3,6 @@
     - [Programming Elementary Cellular Automata](./ElementaryCellularAutomata1.md)
     - [Patterns](./ElementaryCellularAutomata2.md)
 - [Conway's Game of Life](./GameOfLife0.md)
-    - [Programming the Game of Life](./GameOfLife1.md)
+    - [Basic Grid Logic](./GameOfLife1.md)
+    - [More Grid Logic](./GameOfLife2.md)
     - [Patterns](./GameOfLife2.md)

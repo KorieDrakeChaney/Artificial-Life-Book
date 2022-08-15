@@ -130,6 +130,7 @@ class Grid {
         cellSize : 20, 
         generationLimit : 30, 
         interactiveCells : true,
+        interactive : false,
         repeatAfter : 0,
         initCells : [], 
         offset : [0, 0],
@@ -152,6 +153,7 @@ class Grid {
         if(data.infinite == undefined) data.infinite = false;
         if(data.generationLimit == undefined) data.generationLimit = 30;
         if(data.interactiveCells == undefined) data.interactiveCells = true;
+        if(data.interactive == undefined) data.interactive = false;
         if(data.repeatAfter == undefined) data.repeatAfter = 0;
         if(data.initCells == undefined) data.initCells = [];
         if(data.offset == undefined) data.offset = [0, 0];
@@ -161,7 +163,7 @@ class Grid {
         if(data.spread == undefined) data.spread =  false;
 
 
-   
+        this.pause = false;
         this.cellItterator = 0;
         this.borderCells = [];
         this.currentBorderCell = 0;
@@ -188,7 +190,8 @@ class Grid {
         this.useBorders = data.useBorders;
         this.borderColor = data.borderColor;
         this.infinite = data.infinite;
-        this.interactiveCells = data.interactiveCells
+        this.interactiveCells = data.interactiveCells;
+        this.interactive = data.interactive;
         this.relativeObject = document.getElementById(data.relativeObject);
         this.relative = this.relativeObject != undefined;
         this.label = data.label;
@@ -196,10 +199,11 @@ class Grid {
         this.random = data.random;
         this.gridObject = this.relative ? this.relativeObject.appendChild(document.createElement('div')) : document.body;
         if(this.relative){
+            if(this.interactive) this.gridObject.tabIndex = "0"
             this.relativeObject.style.alignText = "center"
             this.gridObject.style.justifyContent = "center"
             this.gridObject.style.display = 'grid'
-            this.gridObject.style.gridTemplateColumns = `repeat(${this.width} , ${this.cellSize}px)`
+            this.gridObject.style.gridTemplateColumns = `repeat(${this.width } , ${this.cellSize}px)`
             this.gridObject.style.gridTemplateRows = `repeat(${this.height} , ${this.cellSize}px)`
         }
         if(this.hasLabel){
@@ -272,7 +276,17 @@ class Grid {
                 }
             }
 
-
+        }
+        if(this.interactive){
+            document.addEventListener('keydown', function(event){
+                if(this.gridObject == document.activeElement){
+                    if(event.key == "p") this.pause = !this.pause;
+                    if(event.key == "r") this.randomize();
+                    if(event.key == "c") this.useColor = !this.useColor;
+                    if(event.key == "a") this.useAlpha = !this.useAlpha;
+                    if(event.key == "v") this.clear()
+                }
+            }.bind(this))
         }
 
         this.highlightColor = new Color(Rand(0, 255), Rand(0, 255), Rand(0, 255), 0.875)
@@ -368,7 +382,7 @@ class Grid {
                 if(this.random) this.randomize();
                 else for(const id of this.initCells) this.cells[id].state = 1
             }
-            if(this.generation % this.borderCells.length == 0){
+            if(this.generation % (this.borderCells.length + 1) == 0){
                 this.toggleBorderColor()
             }
         }
@@ -377,15 +391,16 @@ class Grid {
     this.checkNeighbor()
 
     for(const cell of this.cells){
-          if(cell.aliveNeighbors == 2){
-          }
-          else if(cell.aliveNeighbors == 3){
-              cell.state = 1
-          }
-          else {
-              cell.state = 0
+        if(!this.pause){
+            if(cell.aliveNeighbors == 2){
             }
-            
+            else if(cell.aliveNeighbors == 3){
+                cell.state = 1
+            }
+            else {
+                cell.state = 0
+            }
+        }
         
         if(this.useColor){
             if (cell.state == 0) {
@@ -423,16 +438,34 @@ class Grid {
 
     if(this.useBorders){
         let cell = this.cells[this.borderCells[this.currentBorderCell]]
+        if(this.currentBorderCell == 0){
+            cell = this.cells[this.borderCells[0]]
+        }   
+        else if(this.currentBorderCell == this.borderCells.length){
+            cell = this.cells[this.borderCells[0]]
+        }
         if(cell){
-            let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
-            cell.borderColor = Color.lerpColors(cell.borderColor, this.highlightColor, alpha);
-            cell.body.style.borderColor = cell.borderColor.toString()
-            if(this.currentBorderCell + 1 == this.borderCells.length) this.currentBorderCell = 0;
+            if(this.currentBorderCell == 0){
+                let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+                cell.borderColor = Color.lerpColors(cell.borderColor, this.highlightColor, alpha);
+                cell.body.style.borderLeftColor = cell.borderColor.toString()
+            }
+            else if(this.currentBorderCell == this.borderCells.length){
+                let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+                cell.borderColor = Color.lerpColors(cell.borderColor, this.highlightColor, alpha);
+                cell.body.style.borderTopColor = cell.borderColor.toString()
+      
+            }
+            else { 
+                let alpha = this.useAlpha ? 0.25 * 0.25 * (3 - 2 * 0.25) : 1.0;
+                cell.borderColor = Color.lerpColors(cell.borderColor, this.highlightColor, alpha);
+                cell.body.style.borderColor = cell.borderColor.toString()
+            }
+            if(this.currentBorderCell == this.borderCells.length) this.currentBorderCell = 0;
             else this.currentBorderCell++;
         }
     }
-    
-    this.generation+=1;
+        this.generation +=1;
     }
 
   
@@ -641,3 +674,4 @@ class Grid {
         return grid
     }
 }
+

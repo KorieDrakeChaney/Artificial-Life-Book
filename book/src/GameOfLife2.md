@@ -1,6 +1,6 @@
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Patterns</b></span>
-</div>
+<br>
+<h1 style = "text-align: center;">Patterns</h1>
+
 
 ---
 
@@ -43,12 +43,12 @@
 
 <div class ="container">
 
-<div class="explanation" id="blinker" style="text-align:center"></div>
 <div class="explanation" id="toad" style="text-align:center"></div>
 <div class="explanation" id="beacon" style="text-align:center"></div>
 <div class="explanation" id="pulsar" style="text-align:center"></div>
 <div class="explanation" id="pentadecathlon" style="text-align:center"></div>
 <div class="explanation" id="glidergun" style="text-align:center"></div>
+<div class="explanation" id="blinker" style="text-align:center"></div>
 
 </div>
 
@@ -134,7 +134,7 @@
     let grid = new Grid({
     width : 50, height : 50,
     infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 150, useBorders : true, 
-    relativeObject : "gof", label : "Game Of Life", random : true, useColor : true, useAlpha : true})
+    relativeObject : "gof", label : "Game Of Life", interactive : true, random : true, useColor : true, useAlpha : true})
     grid.startAnimating()
 
 </script>
