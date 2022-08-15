@@ -63,6 +63,7 @@ function playground_text(playground) {
                 });
             }
         }
+        run_rust_code(playground_block)
     }
 
     // updates the visibility of play button based on `no_run` class and
