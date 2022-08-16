@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Patterns</title>
+        <title>More Grid Logic</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Programming Elementary Cellular Automata</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata2.html"><strong aria-hidden="true">1.2.</strong> Patterns</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html"><strong aria-hidden="true">2.1.</strong> Basic Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html" class="active"><strong aria-hidden="true">2.2.</strong> More Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html" class="active"><strong aria-hidden="true">2.3.</strong> Patterns</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Programming Elementary Cellular Automata</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata2.html"><strong aria-hidden="true">1.2.</strong> Patterns</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html"><strong aria-hidden="true">2.1.</strong> Basic Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html" class="active"><strong aria-hidden="true">2.2.</strong> More Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife3.html"><strong aria-hidden="true">2.3.</strong> Patterns</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,124 +145,164 @@
                 <div id="content" class="content">
                     <main>
                         <br>
-<h1 style = "text-align: center;">Patterns</h1>
+<h1 style = "text-align: center;">More Grid Logic</h1>
 <hr />
-<script src="ConwaysGameOfLife.js"></script>
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Game of Life</b></span>
-<br>
-<span style="color:grey">The Main</span>
-</div>
-<div class ="container">
-    <div class="explanation" id="gof" style="text-align:center"></div>
-</div>
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Still Lives</b></span>
-<br>
-<span style="color:grey">Boring Dudes</span>
-</div>
-<div class ="container">
-<div class="explanation" id="block" style="text-align:center"></div>
-<div class="explanation" id="beehive" style="text-align:center"></div>
-<div class="explanation" id="loaf" style="text-align:center"></div>
-<div class="explanation" id="boat" style="text-align:center"></div>
-<div class="explanation" id="tub" style="text-align:center"></div>
+<div class = "container">
+<h2 class="secondary-header">Tools We Will Be Using</h2>
+    <div class = "example"> 
+<ul>
+<li><a  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank"><b class="reference">Arrays</b></a></li>
+</ul>
+<i style="color:grey;">
+Be familiar with these, as we will be using them, so I do not want you to be confused later on.
+</i>
+    </div>
 </div>
 <hr />
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Oscillators</b></span>
+<div class="container">
+So far we have just a line of cells, nothing special. Now we need to put them where they belong, at their coordinates. In order to do that, we must use the <b>columm</b> and <b>row</b> from our <b class="keyword">for loops</b> , and put the <b>cell</b>.<b class="variable">position</b> variable to use. Let's take a step back to conceptualize this.
 <br>
-<span style="color:grey">Amazing</span>
-</div>
-<div class ="container">
-<div class="explanation" id="toad" style="text-align:center"></div>
-<div class="explanation" id="beacon" style="text-align:center"></div>
-<div class="explanation" id="pulsar" style="text-align:center"></div>
-<div class="explanation" id="pentadecathlon" style="text-align:center"></div>
-<div class="explanation" id="glidergun" style="text-align:center"></div>
-<div class="explanation" id="blinker" style="text-align:center"></div>
-</div>
-<hr />
-<div class="primary-header">
-<span style="font-size : 30px;"><b>Spaceships</b></span>
 <br>
-<span style="color:grey">Beautiful</span>
+<video controls>
+<source src="GridAnalyzer.mp4" type="video/mp4">
+</video>
+<p>20px just represents our cell’s size, but looking at this, we need to space each individual cell by 20px(or whatever we put our cellsize to).</p>
+<br>
+<br>
+<video controls>
+<source src="GridSpace.mp4" type="video/mp4">
+</video>
+<p>Now hopefully we get into a territory where lightbulbs are flashing. We can multiply <b>column</b> * <b>cellSize</b> to get our <b>x</b> value, and the same for the <b>y</b> value but replacing <b>column</b> for <b>row</b>.</p>
+<div class="example">
+<p>\(x = column * cellsize \)
+<br></p>
+<p>\(y = row * cellsize \)</p>
 </div>
-<div class ="container">
-<div class="explanation" style="text-align:center"><div id="glider"></div></div>
-<div class="explanation" style="text-align:center"><div id="lightweightspaceship"></div></div>
-<div class="explanation" style="text-align:center"><div id="middleweightspaceship"></div></div>
-<div class="explanation" style="text-align:center"><div id="heavyweightspaceship"></div></div>
-</div>
+<p>So that <b>[column, row]</b> value we were passing into the cell can now be referenced and change used to change it’s position.</p>
+<pre><code class="language-javascript">class Cell {
+  constructor(state, id, position, size) {
+    //earlier code
+
+    this.body.style.left = `${this.size * position[0]}px` // for x
+    this.body.style.top = `${this.size * position[1]}px` // y
+
+</code></pre>
+<p>You may be wondering why I am using <b>left</b> and <b>top</b>, instead of <b>x</b> and <b>y</b>. Well for CSS <b>left</b> and <b>top</b> are identical to what we view as <b>x</b> and <b>y</b>, as <b>left</b> just means how far right we are, and <b>top</b> is how far down we are. So exactly what we need.</p>
+<br>
+<p>Now if you try to run the code now, you will see the same thing and that’s because we haven’t changed it’s <a href="https://www.w3schools.com/css/css_positioning.asp" target="blank"><b class="reference">position</b></a> to <b>absolute</b> which pretty much locks into our <b>left</b> and <b>top</b> values and uses them.</p>
+<pre><code class="language-javascript">class Cell {
+  constructor(state, id, position, size) {
+
+    //new code 
+
+    this.body.style.position = 'absolute'
+
+
+</code></pre>
+<p>Now run and see that our cells are positioned where they should be.</p>
+<p>We can add a border to see each individual cell, like <b>this</b>:</p>
+<pre><code class="language-javascript">class Cell {
+  constructor(state, id, position, size) {
+
+    //new code 
+
+    this.body.style.border = 'solid 2px black'
+
+
+</code></pre>
+<p><b>Result:</b> <div id="GameOfLifeExample1"></div></p>
 <script>
+    const body = document.getElementById("GameOfLifeExample1")
+    body.style.justifyContent = "center"
+    body.style.textAlign = "center"
+    const element = document.createElement('div');
+    body.appendChild(element);
+    let tag = document.createElement('div');
+    body.appendChild(tag);
+    tag.innerHTML = "click a cell";
+    element.style.display = 'grid';
+    element.style.justifyContent = "center"
+    element.style.display = 'grid'
+    element.style.gridTemplateColumns = `repeat(${4} , ${20}px)`
+    element.style.gridTemplateRows = `repeat(${4} , ${20}px)`
+    class Cell {
+    constructor(state, id, position, size) {
+        this.state = state;
+        this.id = id;
+        this.position = position;
+        this.size = size;
 
-    let isMobile = /mobile/i.test(navigator.userAgent);
-    let templates = [
-    ["blinker", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true}], 
-    ["block", {
-         infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["loaf", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["boat",  {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }
-    ], 
-    ["beehive", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["tub", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], [
-    "pulsar", {
-        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 15, useBorders : true
-    }
-    ], 
-    ["glidergun", {
-        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 40, useBorders : true
-    }], 
-    ["beacon", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["toad", {
-        infinite : true, cellSize : isMobile ? 10: 20, repeatAfter : 15, useBorders : true
-    }], 
-    ["pentadecathlon", {
-        infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 25, useBorders : true
-    }], 
-    ["glider", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }], 
-    [
-    "lightweightspaceship", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }
-    ], 
-    [
-    "middleweightspaceship", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }
-    ], 
-    ["heavyweightspaceship", {
-        infinite : true, cellSize : isMobile ? 7.5 : 15, repeatAfter : 50, useBorders : true
-    }
-    ]]
+        this.body = document.createElement("div");
+        this.body.style.backgroundColor = "red";
+        this.body.style.width = `${this.size}px`
+        this.body.style.height = `${this.size}px`
+        this.body.style.gridColumn = `${position[0] + 1}px`
+        this.body.style.gridRow = `${position[1] + 1}px`
+        this.body.style.border = 'solid 2px black'
 
-    for(const template of templates){
-        let grid = Grid.to(template[0], {...{label : template[0], relativeObject : template[0]}, ...template[1]})
-        grid.startAnimating();
+        this.body.addEventListener('click', () => { 
+            tag.innerHTML = `(${this.position[0]}, ${this.position[1]})`
+        })
+        element.appendChild(this.body);
+    }
     }
 
-    let grid = new Grid({
-    width : 50, height : 50,
-    infinite : true, cellSize : isMobile ? 5 : 10, repeatAfter : 150, useBorders : true, 
-    relativeObject : "gof", label : "Game Of Life", interactive : true, random : true, useColor : true, useAlpha : true})
-    grid.startAnimating()
+    class Grid {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+        this.cellSize = 20;
+        for (let column = 0; column < this.width; column++) {
+        for (let row = 0; row < this.height; row++) {
+            let cell = new Cell(0, 0, [column, row], this.cellSize);
+        }
+        }
+    }
+    }
+
+    new Grid(4, 4);
+    ;
 
 </script>
-<footer id="footer"></footer>
+<p>Now I want to add an array of cells, so we can reference them later on, this will also allow us to set the id’s of each individual cell as well. First let’s create a cells array in <b class="function">Grid</b> class:</p>
+<pre><code class="language-javascript">class Grid { 
+    constructor(width, height){
+        // stuff
+        this.cells = []
+
+        //stuff
+
+    }
+}
+
+</code></pre>
+<p>Then we can push our created cell into the array:</p>
+<pre><code class="language-javascript">
+for (let column = 0; column &lt; this.width; column++) {
+    for (let row = 0; row &lt; this.height; row++) {
+        let cell = new Cell(0, this.cells.length, [column, row], this.cellSize);
+        this.cells.push(cell)
+    }
+}
+
+</code></pre>
+<p>Add we can use the <b class="variable">this.cells</b>.length as a reference to the cells id so we can know what index that individual cell is at. To conceptually understand where each cell is going on the grid, we can translate our coordinate world into array world.</p>
+<br> 
+<video controls>
+<source src="GridToArray.mp4" type="video/mp4">
+</video>
+<p>Which to formula to translate this would be : </p>
+<div class="example">
+<p>\(index = (y + (x * height))\)</p>
+</div>
+<p>And to reverse index back into coordinates would be : </p>
+<div class="example">
+<p>\(x = x \mod height \)</p>
+<br>
+<p>\(y = Math.floor(y / height) \)</p>
+</div>
+</div>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -271,7 +311,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="GameOfLife2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="GameOfLife3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -285,7 +325,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="GameOfLife2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="GameOfLife3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Programming Elementary Cellular Automata</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata2.html"><strong aria-hidden="true">1.2.</strong> Patterns</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html" class="active"><strong aria-hidden="true">2.1.</strong> Basic Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html"><strong aria-hidden="true">2.2.</strong> More Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html"><strong aria-hidden="true">2.3.</strong> Patterns</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata0.html"><strong aria-hidden="true">1.</strong> Elementary Cellular Automata</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ElementaryCellularAutomata1.html"><strong aria-hidden="true">1.1.</strong> Programming Elementary Cellular Automata</a></li><li class="chapter-item expanded "><a href="ElementaryCellularAutomata2.html"><strong aria-hidden="true">1.2.</strong> Patterns</a></li></ol></li><li class="chapter-item expanded "><a href="GameOfLife0.html"><strong aria-hidden="true">2.</strong> Conway's Game of Life</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="GameOfLife1.html" class="active"><strong aria-hidden="true">2.1.</strong> Basic Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife2.html"><strong aria-hidden="true">2.2.</strong> More Grid Logic</a></li><li class="chapter-item expanded "><a href="GameOfLife3.html"><strong aria-hidden="true">2.3.</strong> Patterns</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -153,12 +153,11 @@
 <ul>
 <li><a  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank"><b class="reference">Classes</b></a></li>
 <li><a  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration" target="_blank"><b class="reference">For Loops</b></a></li>
-<li><a  href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" target="_blank"><b class="reference">requestAnimationFrame</b></a></li>
-<li><b>Math</b>.<a  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random" target="_blank"><b class="reference">random</b></a></li>
-<li><a  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else" target="_blank"><b class="reference">if…else</b></a></li>
 </ul>
-<p>Be familiar with these, as we will be using them, so I do not want you to be confused later on.
-</div></p>
+<i style="color:grey;">
+Be familiar with these, as we will be using them, so I do not want you to be confused later on.
+</i>
+    </div>
 </div>
 <hr />
 <div class="container"> 
@@ -208,8 +207,11 @@ for(let column = 0; column &lt; this.width; column++){
 <p>So right now, it does nothing, but what we can do with this logic is great. In our code, create a variable <b class="variable">grid</b> and set it’s value to a <b class="keyword"> new </b> <b class="function">Grid</b>, with the arguments being whatever you like.</p>
 <pre><code class="language-javascript">    let grid = new Grid(4, 4)
 </code></pre>
-<p>now in the <b class="keyword">for loops</b>, you can log the column and row, and see that we ended up with the values that we saw in the video. <i style="color:grey;">assuming you watched</i></p>
+<p>now in the <b class="keyword">for loops</b>, you can log the <b>column</b> and <b>row</b>, and see that we ended up with the values that we saw in the video. <i style="color:grey;">assuming you watched</i></p>
 <p>Now what ? Well, the video has one thing we don’t, cells ! Another <b>main</b> thing !</p>
+</div>
+<hr />
+<div class="container">
 <h2 class="secondary-header">Creating The Cell Class</h2>
 <p>Now for this one, let’s create a basic <b class="function">Cell</b> class. This class holds a <b class="variable">state</b>, <b class="variable">id</b> and <b class="variable">position</b>([x, y]) which will be changed through the passing arguments.</p>
 <pre><code class="language-javascript">
@@ -287,6 +289,9 @@ class Cell {
 }
 
 </code></pre>
+<hr />
+<div class="container">
+<h2 class="secondary-header">Using Cell Class in Grid Class</h2>
 <p>Now let’s create the cells! Remember the nested <b class="keyword">for loops</b> we had earlier? Let’s go back into the <b class="function">Grid</b> class , and add some new lines of code.</p>
 <pre><code class="language-javascript">class Grid {
     constructor(width , height){
@@ -336,7 +341,7 @@ class Cell {
 
 </code></pre>
 <p>Now, if we did this right, we should have red squares ! Next chapter will be how to set up more of the grid logic : D.</p>
-<p>End Result : <div id="GameOfLifeExample1"></div></p>
+<p><b>End Result :</b> <div id="GameOfLifeExample1"></div></p>
 <script>
     const element = document.getElementById("GameOfLifeExample1")
     class Cell {
@@ -371,7 +376,7 @@ class Cell {
     new Grid(4, 4);
 
 </script>
-<p>Code should be : </p>
+<p><b>Code should be</b> : </p>
 <pre><code class="language-javascript">
 class Cell {
   constructor(state, id, position, size) {
